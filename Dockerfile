@@ -3,8 +3,8 @@
 # We add: v1.5 weights + updated MuseTalk code + R2 upload support
 FROM camenduru/style-tts-muse-talk:latest
 
-# Install runpod SDK + boto3 for R2 uploads
-RUN pip install --no-cache-dir runpod boto3
+# Install runpod SDK + deps
+RUN pip install --no-cache-dir runpod boto3 pyyaml
 
 # Update MuseTalk to latest (has v1.5 support in load_all_model)
 RUN cd /content/MuseTalk && git pull origin main

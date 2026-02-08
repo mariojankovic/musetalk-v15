@@ -75,14 +75,14 @@ def run_musetalk(video_path, audio_path, result_dir, bbox_shift=0):
     """Run MuseTalk 1.5 via subprocess (uses official inference script)."""
     os.makedirs(result_dir, exist_ok=True)
 
-    # Write inference config YAML
-    config = [
-        {
+    # Write inference config YAML (must be dict keyed by task name, not list)
+    config = {
+        "task_0": {
             "video_path": video_path,
             "audio_path": audio_path,
             "bbox_shift": bbox_shift,
         }
-    ]
+    }
     config_path = os.path.join(result_dir, "inference_config.yaml")
     with open(config_path, "w") as f:
         yaml.dump(config, f)

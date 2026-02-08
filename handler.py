@@ -128,6 +128,9 @@ def _enhance_video(input_path, output_path):
     """Post-process video with GFPGAN face restoration."""
     import cv2
     import torch
+    import sys
+    import torchvision.transforms.functional as F
+    sys.modules['torchvision.transforms.functional_tensor'] = F
     from gfpgan import GFPGANer
 
     restorer = GFPGANer(

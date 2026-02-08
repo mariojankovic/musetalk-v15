@@ -40,7 +40,7 @@ RUN pip install --no-cache-dir gfpgan && \
 
 # Fix basicsr/torchvision compatibility (functional_tensor removed in newer torchvision)
 COPY patch_basicsr.py /tmp/patch_basicsr.py
-RUN python /tmp/patch_basicsr.py && rm /tmp/patch_basicsr.py
+RUN python /tmp/patch_basicsr.py
 
 # Copy our handler
 COPY handler.py /content/handler.py

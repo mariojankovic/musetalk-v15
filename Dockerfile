@@ -39,10 +39,9 @@ RUN pip install --no-cache-dir gfpgan && \
       https://github.com/TencentARC/GFPGAN/releases/download/v1.3.4/GFPGANv1.4.pth
 
 # Fix basicsr/torchvision compatibility (functional_tensor removed in newer torchvision)
-RUN python -c "\
-import torchvision, os; \
-p = os.path.join(os.path.dirname(torchvision.__file__), 'transforms', 'functional_tensor.py'); \
-open(p, 'w').write('from torchvision.transforms.functional import *\n')"
+RUN FPATH=$(python -c "import torchvision, os; print(os.path.join(os.path.dirname(torchvision.__file__), 'transforms', 'functional_tensor.py'))") && \
+    rm -f "$FPATH" && \
+    echo "from torchvision.transforms.functional import *" > "$FPATH"
 
 # Copy our handler
 COPY handler.py /content/handler.py

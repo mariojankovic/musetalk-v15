@@ -23,6 +23,15 @@ RUN mkdir -p /content/MuseTalk/models/sd-vae && \
     huggingface-cli download stabilityai/sd-vae-ft-mse diffusion_pytorch_model.bin \
       --local-dir /content/MuseTalk/models/sd-vae --local-dir-use-symlinks False
 
+# Download Whisper-tiny for audio processing (required by v1.5)
+RUN mkdir -p /content/MuseTalk/models/whisper && \
+    huggingface-cli download openai/whisper-tiny config.json \
+      --local-dir /content/MuseTalk/models/whisper --local-dir-use-symlinks False && \
+    huggingface-cli download openai/whisper-tiny pytorch_model.bin \
+      --local-dir /content/MuseTalk/models/whisper --local-dir-use-symlinks False && \
+    huggingface-cli download openai/whisper-tiny preprocessor_config.json \
+      --local-dir /content/MuseTalk/models/whisper --local-dir-use-symlinks False
+
 # GFPGAN for optional face enhancement
 RUN pip install --no-cache-dir gfpgan && \
     mkdir -p /content/models/gfpgan && \

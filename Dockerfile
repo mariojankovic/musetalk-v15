@@ -9,12 +9,15 @@ RUN pip install --no-cache-dir runpod boto3 pyyaml
 # Update MuseTalk to latest (has v1.5 support in load_all_model)
 RUN cd /content/MuseTalk && git pull origin main
 
-# Download MuseTalk v1.5 weights from HuggingFace
+# Download MuseTalk v1.5 weights + SD-VAE from HuggingFace
 RUN pip install -q huggingface-hub && \
-    mkdir -p /content/MuseTalk/models/musetalkV15 && \
     huggingface-cli download TMElyralab/MuseTalk musetalkV15/musetalk.json \
       --local-dir /content/MuseTalk/models --local-dir-use-symlinks False && \
     huggingface-cli download TMElyralab/MuseTalk musetalkV15/unet.pth \
+      --local-dir /content/MuseTalk/models --local-dir-use-symlinks False && \
+    huggingface-cli download TMElyralab/MuseTalk sd-vae/config.json \
+      --local-dir /content/MuseTalk/models --local-dir-use-symlinks False && \
+    huggingface-cli download TMElyralab/MuseTalk sd-vae/diffusion_pytorch_model.safetensors \
       --local-dir /content/MuseTalk/models --local-dir-use-symlinks False
 
 # GFPGAN for optional face enhancement
